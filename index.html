@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abraham S. Nagavkar - IT & Engineering Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1e3c72;
+            color: white;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100vh;
+            padding: 40px 40px 120px 40px;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            transition: opacity 0.4s ease-in-out;
+            overflow-y: auto;
+            z-index: 1;
+            opacity: 0;
+        }
+
+        .slide.active {
+            display: block;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .slide h1 {
+            font-size: 3.5em;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #FFD700;
+            text-align: center;
+            border-bottom: 3px solid #FFD700;
+            padding-bottom: 15px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #87CEEB;
+        }
+
+        .slide h4 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #98FB98;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            height: calc(100vh - 330px);
+            overflow-y: auto;
+        }
+
+        .content-single {
+            height: calc(100vh - 280px);
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .content-single::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content-single::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+
+        .content-single::-webkit-scrollbar-thumb {
+            background: rgba(255,215,0,0.5);
+            border-radius: 4px;
+        }
+
+        .content-single::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,215,0,0.7);
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .expertise-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #FFD700;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-value {
+            font-size: 1.5em;
+            color: #90EE90;
+            font-weight: bold;
+        }
+
+        .slide-navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .slide-nav-btn {
+            background: rgba(30,60,114,0.9);
+            color: white;
+            border: 2px solid #FFD700;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .slide-nav-btn:hover {
+            background: #FFD700;
+            color: #1e3c72;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+        }
+
+        .slide-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-nav-btn:disabled:hover {
+            background: rgba(30,60,114,0.9);
+            color: white;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .contact-info {
+            text-align: center;
+            font-size: 1.3em;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+
+        .skills-list {
+            columns: 2;
+            column-gap: 30px;
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .skills-list li {
+            margin-bottom: 10px;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            break-inside: avoid;
+            border-left: 3px solid #FFD700;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #FFD700;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -35px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            background: #FFD700;
+            border-radius: 50%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            margin-top: 10px;
+            color: #87CEEB;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="slideNumber">1</span> / <span id="totalSlides">12</span>
+        </div>
+
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active">
+            <div style="text-align: center; height: calc(100vh - 200px); display: flex; flex-direction: column; justify-content: center;">
+                <h1>Abraham S. Nagavkar</h1>
+                <h3 style="color: #87CEEB; font-size: 2.2em; margin: 30px 0;">IT Manager | CIO | CAD & BIM Management Specialist</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">40+</div>
+                        <div class="stat-label">Years Global Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$1.8B+</div>
+                        <div class="stat-label">Project Value</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">13+</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2500+</div>
+                        <div class="stat-label">Users Managed</div>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <p><strong>📞 +972-54-4344477 | ✉️ avraham.nagavkar@gmail.com</strong></p>
+                    <p>Israeli Citizen & OCI India National</p>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()" disabled>← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Executive Summary -->
+        <div class="slide">
+            <h2>Executive Profile</h2>
+            <div class="content-single">
+                <h3>Global IT Leadership Excellence</h3>
+                <p style="font-size: 1.3em; line-height: 1.6; margin-bottom: 30px;">
+                    Seasoned IT executive with 40+ years of progressive experience delivering complex, multi-million dollar EPC/LSTK projects across diverse industries including petrochemicals, power generation, semiconductors, and construction engineering. Expert in strategic IT planning, CAD/BIM systems, and international project coordination with demonstrated management capabilities.
+                </p>
+                
+                <div class="expertise-grid">
+                    <div class="expertise-card">
+                        <h4>🎯 Strategic Leadership</h4>
+                        <p>CIO operations, global infrastructure management, strategic planning, budget control, crisis management and team development</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🔧 Technical Mastery</h4>
+                        <p>CAD/BIM systems, engineering software, virtualization, and design automation</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🌍 International Experience</h4>
+                        <p>13+ countries, 25+ Project Sites, multi-cultural teams, complex regulatory environments</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>💼 Business Acumen</h4>
+                        <p>Budget optimization, procurement, asset management, and profit-driven solutions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: Core Areas of Expertise -->
+        <div class="slide">
+            <h2>Areas of Expertise</h2>
+            <div class="content-single">
+                <div class="expertise-grid">
+                    <div class="expertise-card">
+                        <h4>📈 Business Development</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Strategic planning & implementation</li>
+                            <li>Market analysis & opportunity assessment</li>
+                            <li>Partnership development</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🛒 Procurement & Asset Management</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Vendor management & negotiations</li>
+                            <li>Asset lifecycle optimization</li>
+                            <li>Cost-benefit analysis</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🏗️ Infrastructure Design & Implementation</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Network architecture & telecommunications</li>
+                            <li>Data center design</li>
+                            <li>Integration & administration</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>💰 Financial Management</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Budgeting & cost control</li>
+                            <li>Cost-saving solutions</li>
+                            <li>ROI optimization</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🚚 Logistics & Operations</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Supply chain management</li>
+                            <li>Resource allocation</li>
+                            <li>Operational efficiency</li>
+                        </ul>
+                    </div>
+					<div class="expertise-card">
+                        <h4>🤖 Generative AI</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Generative AI Strategy Consultant</li>
+                            <li>AI Workflow Automation Specialist</li>
+                            <li>Digital Transformation Lead </li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>☁️ Virtualization Technology</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Cloud infrastructure</li>
+                            <li>Server consolidation</li>
+                            <li>Performance optimization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Advanced Technical Expertise -->
+        <div class="slide">
+            <h2>Advanced Technical Capabilities</h2>
+            <div class="content-single">
+                <div class="expertise-grid">
+                    <div class="expertise-card">
+                        <h4>🔒 Cybersecurity & Risk Management</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Security policy development</li>
+                            <li>Threat assessment & mitigation</li>
+                            <li>Compliance management</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🔄 Disaster Recovery & Business Continuity</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Redundancy backup planning</li>
+                            <li>Crisis management protocols</li>
+                            <li>Recovery time optimization</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🌐 IT Networking & Telecommunications</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>WAN/LAN design & implementation</li>
+                            <li>Satellite communications</li>
+                            <li>Network security protocols</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🔍 Due Diligence & Strategic Acquisitions</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Technology assessment</li>
+                            <li>Integration planning</li>
+                            <li>Risk evaluation</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>📋 Policies & Procedures</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Standard operating procedures</li>
+                            <li>Compliance frameworks</li>
+                            <li>Quality assurance protocols</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🤝 Strategic Partnerships</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Vendor relationship management</li>
+                            <li>Joint venture coordination</li>
+                            <li>Technology partnerships</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+<!-- Slide 5: Generative AI Strategy -->
+        <div class="slide">
+            <h2>Generative AI Strategy | AI Workflow Automation | Digital Transformation Professional</h2>
+			<div style="text-align: center; class="intro-text">
+               <h4> Certified Professional with comprehensive expertise in AI technologies, 
+                Microsoft 365 Copilot suite, generative AI applications, Cybersecurity, driving digital innovation, enhancing productivity, delivering measurable business impact through AI integration, Strategic Value & Profit ,Operational Efficiency & Productivity.
+				<p>Executive Vision & Implementation.</p><h4>
+            </div>
+            <div class="content-single">
+                <div class="expertise-grid">
+                    <div class="expertise-card">
+                        <h4>🤖 Generative AI </h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Analyzing market trends and internal data using AI to speed up reporting and insight generation</li> <li>Multi-Model Competency Advanced prompting and comparative analysis across GPT-4, Google Gemini, Claude 3, Deepseek and Perplexity</li>
+							<li>Engineering Designing context-aware prompts for content creation, research, and complex problem-solving</li>
+                            <li>Leveraging AI to generate code snippets and automate technical tasks without deep manual programming</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>💼 Microsoft 365 Copilot</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li> Data Scrutiny Using Excel Copilot for formula generation, data visualization, & predictive trend analysis</li>
+                            <li>Collaborative Streamlining meeting workflows in Teams (summarization, action items) and knowledge management in OneNote</li>
+                            <li>Presentation Design Automating slide deck creation and narrative structuring using PowerPoint</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>⚙️ AI Development</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>AI implementation, Vibe Coding, AI Integration - Building intelligent solutions</li>
+                            <li>Rapid data synthesis, transforming raw datasets into actionable insights and visual summaries for stakeholder presentations</li>
+                            <li>Advanced market analysis, generating competitor overviews and SWOT analyses </li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🔒 Cybersecurity</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Digital Risk Awareness: Understanding Cyber Asset Management and the security implications of utilizing digital resources</li>
+                            <li>Digital Security: Using artificial intelligence, machine learning, and data analytics to automate threat detection, response, prevention & Protecting enterprise systems</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>📊 Business Strategy</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>AI-Powered Consultancy, Team Development. Driving organizational transformation.</li>
+                            <li>AI-Driven Business integrating AI tools into sales pipelines and consultancy projects to maximize profit margins</li>
+                            <li>Optimizing the sales process, automating outreach, and creating pitch decks using AI</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 7: Current Position -->
+        <div class="slide">
+            <h2>Current Position: Multidiscipline IT & Engineering Systems Support Consultant (Jacobs Engineering Projects)</h2>
+            <div class="content-single">
+                <h3>IT Manager </h3>
+                
+                <div class="project-card">
+                    <h4>🏭 Jacobs Engineering Semiconductor Project - Kiryat Gat, Israel</h4>
+                    <div class="project-value">500+ Users | COVID-19 Operations</div>
+                    <p><strong>Key Responsibilities:</strong></p>
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li>Complete IT mobilization and infrastructure setup during pandemic</li>
+                        <li>Built and deployed 350+ standardized laptop images</li>
+                        <li>Established communication rooms and desktop environments</li>
+                        <li>Led Design Automation Group (DAG) initiatives</li>
+                        <li>Implemented comprehensive CAD systems and BIM platforms</li>
+						<li>IT , CAD , BIM , DAG & Engineering Systems Support & Services</li>
+                        <li>Project Coordination & professional services for multi-disciplinary teams</li>
+						<li>Electronic Document Management Systems, assist users to manage digital documents efficiently and securely across various platforms</li>
+                    </ul>
+                    <p><strong>Achievements:</strong></p>
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li>✅ 100% operational continuity during COVID-19 crisis</li>
+                        <li>✅ 60% reduction in system deployment time</li>
+                        <li>✅ Seamless remote/hybrid work transition</li>
+                        <li>✅ Zero security incidents during critical operations</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 8: Bateman Engineering Portfolio -->
+        <div class="slide">
+            <h2>Bateman Engineering Ltd. </h2>
+            <div class="content-single">
+                <h3>Global IT Manager & CIO | Major International Projects</h3>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>🇰🇿 Kazakhstan Power Plant</h4>
+                        <div class="project-value">US$950M</div>
+                        <p>EPC & LSTK Mega Project - Complete IT infrastructure design and implementation</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>🇺🇿 Uzbekistan Gas Power Plant</h4>
+                        <div class="project-value">US$165M</div>
+                        <p>Engineering systems and CAD platform deployment</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>🇹🇲 Turkmenistan Gas Power Plant</h4>
+                        <div class="project-value">US$180M</div>
+                        <p>Integrated IT and communications infrastructure</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>🇷🇺 Russia Gas Compression Station</h4>
+                        <div class="project-value">US$186M</div>
+                        <p>Tomskneft Project - Satellite communication and data management</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>🇮🇱 Dead Sea Magnesium Plant</h4>
+                        <div class="project-value">US$320M</div>
+                        <p>Comprehensive IT architecture and security implementation</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 9: Technical Achievements -->
+        <div class="slide">
+            <h2>Technical Achievements & Capabilities</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>🌍 Global Operations Management</h3>
+                    <ul style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                        <li>Managed IT operations across 13 geographical locations</li>
+                        <li>Implemented centralized security data center architecture</li>
+                        <li>Deployed satellite communication systems</li>
+                        <li>Achieved seamless Citrix environment operations</li>
+                        <li>International HQ synchronization protocols</li>
+                    </ul>
+
+                    <h3 style="margin-top: 40px;">💡 Innovation & Automation</h3>
+                    <ul style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                        <li>Design Automation Group (DAG) leadership</li>
+                        <li>Custom workflow optimization solutions</li>
+                        <li>Multi-platform integration expertise</li>
+                        <li>Standardized deployment processes</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>🔧 Technical Proficiency</h3>
+                    <div class="skills-list">
+                        <li>PDMS, AP3D, PDS, SP3D</li>
+                        <li>AutoCAD, Cadworx, Revit</li>
+                        <li>Autodesk Construction Cloud</li>
+                        <li>Bluebeam Administration</li>
+                        <li>MCITP, MCSE, CCNA</li>
+                        <li>Citrix Environments</li>
+                        <li>Virtualization Technologies</li>
+                        <li>Satellite Communications</li>
+                        <li>Network Security</li>
+                        <li>Database Management</li>
+                        <li>Project Management</li>
+                        <li>Quality Assurance</li>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 10: Industry Sectors -->
+        <div class="slide">
+            <h2>Industry Expertise & Geographic Reach</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>🏭 Industry Sectors</h3>
+                    <div class="expertise-card" style="margin-bottom: 20px;">
+                        <h4>Petrochemicals & Oil Refining</h4>
+                        <p>Process plant design, safety systems, environmental compliance</p>
+                    </div>
+                    <div class="expertise-card" style="margin-bottom: 20px;">
+                        <h4>Power Generation</h4>
+                        <p>Gas plants, utilities, compression stations, renewable energy</p>
+                    </div>
+                    <div class="expertise-card" style="margin-bottom: 20px;">
+                        <h4>Semiconductors</h4>
+                        <p>Clean room facilities, precision manufacturing, quality control</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>Construction & Engineering</h4>
+                        <p>Infrastructure, commercial, industrial, residential projects</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>🌍 Geographic Experience</h3>
+                    <div class="expertise-card" style="margin-bottom: 20px;">
+                        <h4>Middle East</h4>
+                        <p><strong>Israel:</strong> Primary base of operations, major projects<br>
+                        Regional expertise in local regulations and practices</p>
+                    </div>
+                    <div class="expertise-card" style="margin-bottom: 20px;">
+                        <h4>Central Asia</h4>
+                        <p><strong>Kazakhstan, Uzbekistan, Turkmenistan:</strong><br>
+                        Major power generation and infrastructure projects</p>
+                    </div>
+                    <div class="expertise-card" style="margin-bottom: 20px;">
+                        <h4>Eastern Europe</h4>
+                        <p><strong>Russia:</strong> Gas compression and processing facilities<br>
+                        CIS countries collaboration experience</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>South Asia</h4>
+                        <p><strong>India:</strong> Extensive petrochemical experience<br>
+                        Native cultural and business understanding</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 9: Service Portfolio -->
+        <div class="slide">
+            <h2>Comprehensive Service Portfolio</h2>
+            <div class="content-single">
+                <div class="expertise-grid">
+                    <div class="expertise-card">
+                        <h4>🖥️ IT Management & Administration</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Infrastructure design & implementation</li>
+                            <li>Procurement & vendor management</li>
+                            <li>Asset lifecycle management</li>
+                            <li>Cybersecurity & compliance</li>
+                            <li>Disaster recovery planning</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="expertise-card">
+                        <h4>📐 CAD & BIM Services</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>System implementation & customization</li>
+                            <li>User training & certification</li>
+                            <li>Multi-discipline project coordination</li>
+                            <li>Document management systems</li>
+                            <li>Quality assurance protocols</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="expertise-card">
+                        <h4>⚙️ Engineering Software Solutions</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Design automation development</li>
+                            <li>Multi-platform integration</li>
+                            <li>Performance optimization</li>
+                            <li>24/7 technical support</li>
+                            <li>Change management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="expertise-card">
+                        <h4>🎯 Strategic Consulting</h4>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li>Technology roadmap development</li>
+                            <li>Digital transformation</li>
+                            <li>Project management</li>
+                            <li>Team Development</li>
+                            <li>Generative AI Strategy Consultant | AI Workflow Automation Specialist
+</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 11: Professional Development -->
+        <div class="slide">
+            <h2>Education & Professional Qualifications</h2>
+            <div class="content-grid">
+                <div>
+                    <h3>🎓 Academic Background</h3>
+                    <div class="expertise-card" style="margin-bottom: 20px;">
+                        <h4>Mechanical Engineering</h4>
+                        <p>Comprehensive understanding of engineering principles, design methodologies, and industrial applications</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>Computer Science</h4>
+                        <p>Advanced programming concepts, system architecture, database management, and software development</p>
+                    </div>
+                    
+                    <h3 style="margin-top: 30px;">🌐 Languages</h3>
+                    <ul style="font-size: 1.2em; line-height: 1.8; margin-top: 15px;">
+                        <li><strong>English:</strong> Fluent (Business & Technical)</li>
+                        <li><strong>Hebrew:</strong> Fluent (Local Operations)</li>
+                        <li><strong>Hindi:</strong> Native</li>
+                        <li><strong>Marathi:</strong> Native</li>
+                        <li><strong>Gujarati:</strong> Fluent</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>🏆 Professional Certifications</h3>
+                    <div class="skills-list">
+                        <li><strong>Microsoft:</strong> MCITP, MCSE</li>
+                        <li><strong>Cisco:</strong> CCNA</li>
+                        <li><strong>CAD Systems:</strong> AutoCAD Professional</li>
+                        <li><strong>Engineering:</strong> PDMS, AP3D, PDS, SP3D</li>
+                        <li><strong>BIM:</strong> Revit Work Sharing</li>
+                        <li><strong>Collaboration:</strong> Autodesk Contruction Cloud</li>
+                        <li><strong>Specialized:</strong> Cadworx Professional</li>
+                        <li><strong>Document Mgmt:</strong> Bluebeam Admin</li>
+                    </div>
+                    
+                    <h3 style="margin-top: 30px;">💪 Core Strengths</h3>
+                    <div class="expertise-card">
+                        <ul style="padding-left: 20px;">
+                            <li><strong>Reliability:</strong> Consistent delivery under pressure</li>
+                            <li><strong>Vision:</strong> Strategic thinking with practical execution</li>
+                            <li><strong>Adaptability:</strong> Crisis management expertise</li>
+                            <li><strong>Innovation:</strong> Continuous learning and improvement</li>
+                            <li><strong>Leadership:</strong> Team building and mentoring</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 12: Value Proposition -->
+        <div class="slide">
+            <h2>Value Proposition & Engagement Options</h2>
+            <div class="content-single">
+                <h3>🎯 What I Bring to Your Organization</h3>
+                <div class="expertise-grid">
+                    <div class="expertise-card">
+                        <h4>🚀 Immediate Impact</h4>
+                        <p>40+ years of experience ready to deploy. Proven crisis management capabilities with documented success during COVID-19 operations.</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>💰 Cost Optimization</h4>
+                        <p>Demonstrated ability to reduce operational costs while improving efficiency. Expert in budget control and resource optimization.</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🌍 Global Perspective</h4>
+                        <p>International project experience across 13+ countries. Understanding of diverse regulatory and cultural environments.</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🔧 Technical Excellence</h4>
+                        <p>Cutting-edge expertise in CAD/BIM, engineering software, and IT infrastructure. Continuous technology adoption and innovation.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;">🤝 Available Engagement Models</h3>
+                <div class="expertise-grid">
+                    <div class="expertise-card">
+                        <h4>📋 Full-Time CIO/CAD/BIM/IT Manager</h4>
+                        <p>Complete CAD/BIM/IT leadership and strategic planning. Long-term organizational development and digital transformation.</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🎯 Project-Based Consulting</h4>
+                        <p>Specific project implementation, system integration, crisis management, and technical assessments.</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🏗️ Infrastructure Development</h4>
+                        <p>CAD/BIM system setup, IT infrastructure design, and multi-site coordination for complex projects.</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🎓 Training & Development</h4>
+                        <p>Professional skills training, team development, and knowledge transfer programs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Slide 13: Contact & Next Steps -->
+        <div class="slide">
+            <h2>Let's Connect Ready for Next Project</h2>
+            <div style="text-align: center; height: calc(100vh - 280px); display: flex; flex-direction: column; justify-content: center;">
+                <div class="contact-info" style="font-size: 1.5em; margin-bottom: 40px;">
+                    <h3>📞 +972-54-4344477</h3>
+                    <h3>✉️ avraham.nagavkar@gmail.com</h3>
+                    <p style="margin-top: 20px; font-size: 0.9em;">Located in Israel | Available for International Assignments</p>
+                </div>
+
+                <div class="expertise-grid">
+                    <div class="expertise-card">
+                        <h4>🚀 Ready to Deploy</h4>
+                        <p>Immediate availability for critical projects and crisis situations. Proven track record of rapid mobilization.</p>
+                    </div>
+                    <div class="expertise-card">
+                        <h4>🌍 Global Reach</h4>
+                        <p>Experienced in international projects with multicultural teams. Flexible travel and remote work capabilities.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px; padding: 30px; background: rgba(255,215,0,0.1); border-radius: 20px; border: 2px solid #FFD700;">
+                    <h3 style="color: #FFD700; margin-bottom: 20px;">Specialized Services Available</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left;">
+                        <div>
+                            <p>✅ IT Infrastructure Assessment & Design</p>
+                            <p>✅ CAD/BIM System Implementation</p>
+                            <p>✅ Crisis Management & Business Continuity</p>
+                            <p>✅ International Project Coordination</p>
+							<p>✅ Involvement with emerging technologies & consistent upskilling demonstrating adaptability, vision & approach</p>
+                        </div>
+                        <div>
+                            <p>✅ Team Training & Professional Development</p>
+                            <p>✅ Technology Integration & Optimization</p>
+                            <p>✅ Strategic Planning & Digital Transformation</p>
+							<p>✅ Due Diligence & Acquisition Support</p>
+							<p>✅ Generative AI, machine learning applications, AI implementation across organizational functions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 30px; font-size: 1.2em; font-style: italic; color: #87CEEB;">
+                    "Leveraging four decades of experience to deliver innovative IT and engineering solutions that drive business success and operational excellence."
+                </p>
+            </div>
+            <div class="slide-navigation">
+                <button class="slide-nav-btn" onclick="previousSlide()">← Previous</button>
+                <button class="slide-nav-btn" onclick="nextSlide()" disabled>Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('slideNumber').textContent = currentSlide + 1;
+            
+            // Update navigation buttons
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {
+            const prevButtons = document.querySelectorAll('.slide-nav-btn[onclick="previousSlide()"]');
+            const nextButtons = document.querySelectorAll('.slide-nav-btn[onclick="nextSlide()"]');
+            
+            // Disable previous button on first slide
+            prevButtons.forEach(btn => {
+                btn.disabled = currentSlide === 0;
+            });
+            
+            // Disable next button on last slide
+            nextButtons.forEach(btn => {
+                btn.disabled = currentSlide === totalSlides - 1;
+            });
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Initialize navigation buttons
+        updateNavigationButtons();
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') previousSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) nextSlide();
+            if (touchEndX > touchStartX + swipeThreshold) previousSlide();
+        }
+    </script>
+</body>
+</html>
